@@ -1,0 +1,23 @@
+{
+  "name": "arraypress/edd-extended-query",
+  "description": "Enhances Easy Digital Downloads (EDD) database querying with SQL aggregate functions (SUM, AVG, MAX, etc.) and arithmetic operations, enabling sophisticated data analysis and manipulation in WordPress and PHP projects.",
+  "homepage": "https://github.com/arraypress/edd-extended-query/",
+  "type": "library",
+  "license": "GPL-2.0-or-later",
+  "authors": [
+    {
+      "name": "David Sherlock",
+      "homepage": "https://arraypress.com/"
+    }
+  ],
+  "require": {
+    "php": "^7.4 || ^8.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "ArrayPress\\EDD\\Database": "src/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}
