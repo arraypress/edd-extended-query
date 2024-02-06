@@ -1,8 +1,11 @@
 # Easy Digital Downloads Extended Query Class
 
-This class significantly enhances the Easy Digital Downloads (EDD) querying capabilities by introducing the ability to
+This class significantly enhances
+the [Easy Digital Downloads (EDD)](https://github.com/awesomemotive/easy-digital-downloads) querying capabilities by
+introducing the ability to
 perform advanced SQL aggregate operations such as SUM, AVG, MAX, MIN, and more. Designed to complement the ORM
-functionality provided by BerlinDB through the base EDD Query Class, it facilitates complex mathematical queries,
+functionality provided by [BerlinDB](https://github.com/berlindb/core) through the base EDD Query Class, it facilitates
+complex mathematical queries,
 enriching
 data analysis and manipulation tasks.
 
@@ -17,6 +20,10 @@ data analysis and manipulation tasks.
 
 * **Numerical Column Type Support:** Provides a comprehensive list of supported numeric SQL column types for precise
   data handling, including tinyint, smallint, mediumint, int, bigint, decimal, numeric, float, double, bit, and real.
+
+* **Enhanced Grouping Capabilities:** Enables the use of GROUP BY clauses to aggregate multiple sums (SUM), averages (
+  AVG), and other calculations for distinct fields in a single query request. This feature allows for streamlined data
+  grouping and summarization, providing powerful insights into datasets with minimal overhead.
 
 * **Comprehensive Documentation:** Accompanied by detailed documentation and usage examples, making it straightforward
   for developers to implement and leverage its advanced features in their projects.
@@ -44,7 +51,8 @@ require_once __DIR__ . '/vendor/autoload.php';
 ```
 
 This class is specifically designed to serve as a foundational base, enabling developers to extend and tailor their own
-custom query classes according to specific data retrieval and manipulation needs within their Easy Digital Downloads (EDD) extensions or related projects. By inheriting from the `Extended_Query` class, you can create specialized query
+custom query classes according to specific data retrieval and manipulation needs within their Easy Digital Downloads (
+EDD) extensions or related projects. By inheriting from the `Extended_Query` class, you can create specialized query
 handlers for different aspects of your application, such as managing custom task requests, with ease and precision.
 
 Here's an illustrative example of how to extend the Extended_Query class to construct a custom query handler for task
