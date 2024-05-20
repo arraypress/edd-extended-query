@@ -59,7 +59,7 @@ Here's an illustrative example of how to extend the Extended_Query class to cons
 requests.
 
 ```php
-use ArrayPress\EDD\Database\Extended_Query;
+use ArrayPress\Utils\EDD\Database\Extended_Query;
 
 /**
  * Extends the `Extended_Query` class to manage custom task requests.

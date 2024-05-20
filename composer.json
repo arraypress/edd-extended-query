@@ -10,12 +10,18 @@
       "homepage": "https://arraypress.com/"
     }
   ],
+  "config": {
+    "optimize-autoloader": true,
+    "sort-packages": true
+  },
   "require": {
     "php": "^7.4 || ^8.0"
   },
   "autoload": {
     "psr-4": {
-      "ArrayPress\\EDD\\Database\\": "src/"
+      "ArrayPress\\Utils\\EDD\\Database\\": "src/"
     }
-  }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
 }

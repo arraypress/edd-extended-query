@@ -8,16 +8,31 @@
  * code modularity and usability.
  *
  * @package     arraypress/edd-extended-query
- * @version     1.0.0
+ * @version     0.1.0
  * @author      David Sherlock
  * @license     GPL2+
  *
  * @see         https://github.com/arraypress/edd-extended-query for more information and usage examples.
  */
 
-namespace ArrayPress\EDD\Database;
+namespace ArrayPress\Utils\EDD\Database;
 
 defined( 'ABSPATH' ) || exit;
+
+use function add_filter;
+use function implode;
+use function absint;
+use function strpos;
+use function substr;
+use function rtrim;
+use function str_replace;
+use function trim;
+use function strtoupper;
+use function in_array;
+use function is_string;
+use function array_map;
+use function array_unique;
+use function array_flip;
 
 if ( ! class_exists( __NAMESPACE__ . '\\Extended_Query' ) && class_exists( '\EDD\Database\Query' ) ) :
 	/**
@@ -40,7 +55,7 @@ if ( ! class_exists( __NAMESPACE__ . '\\Extended_Query' ) && class_exists( '\EDD
 		 * - VAR_SAMP: Calculates the sample variance of a set of values.
 		 * - VAR_POP: Calculates the population variance of a set of values.
 		 */
-		private array $aggregate_functions = [
+		const AGGREGATE_FUNCTIONS = [
 			'SUM',
 			'AVG',
 			'MAX',
@@ -58,7 +73,7 @@ if ( ! class_exists( __NAMESPACE__ . '\\Extended_Query' ) && class_exists( '\EDD
 		 * - /: Divides one value by another.
 		 * - %: Computes the remainder of the division of one value by another.
 		 */
-		private array $valid_aggregate_operators = [
+		const AGGREGATE_OPERATORS = [
 			'-',
 			'*',
 			'/',
@@ -79,7 +94,7 @@ if ( ! class_exists( __NAMESPACE__ . '\\Extended_Query' ) && class_exists( '\EDD
 		 * - bit: A bit field that can store zero or more bits, useful for storing binary data compactly.
 		 * - real: Synonym for double in MySQL, though it can differ in other databases. Used for double precision floating-point numbers.
 		 */
-		private array $numeric_column_types = [
+		const NUMERIC_COLUMN_TYPES = [
 			'tinyint',
 			'smallint',
 			'mediumint',
@@ -101,7 +116,7 @@ if ( ! class_exists( __NAMESPACE__ . '\\Extended_Query' ) && class_exists( '\EDD
 		 * - int: Standard integer, capable of storing values typically from -2,147,483,648 to 2,147,483,647.
 		 * - bigint: Large integer, capable of storing values typically from -9,223,372,036,854,775,808 to 9,223,372,036,854,775,807.
 		 */
-		private array $int_column_types = [
+		const INT_COLUMN_TYPES = [
 			'tinyint',
 			'smallint',
 			'mediumint',
@@ -307,7 +322,7 @@ if ( ! class_exists( __NAMESPACE__ . '\\Extended_Query' ) && class_exists( '\EDD
 		 */
 		private function sanitize_aggregate_operator( string $operator ): string {
 			$operator = trim( $operator );
-			if ( in_array( $operator, $this->valid_aggregate_operators, true ) ) {
+			if ( in_array( $operator, self::AGGREGATE_OPERATORS, true ) ) {
 				return $operator;
 			}
 
@@ -365,7 +380,7 @@ if ( ! class_exists( __NAMESPACE__ . '\\Extended_Query' ) && class_exists( '\EDD
 		 * @return bool True if the function is supported, false otherwise.
 		 */
 		private function is_valid_aggregate_function( string $function ): bool {
-			return in_array( strtoupper( $function ), $this->aggregate_functions, true );
+			return in_array( strtoupper( $function ), self::AGGREGATE_FUNCTIONS, true );
 		}
 
 		/** Helpers *******************************************************************/
@@ -392,7 +407,7 @@ if ( ! class_exists( __NAMESPACE__ . '\\Extended_Query' ) && class_exists( '\EDD
 			$column = $this->get_column_by( [ 'name' => $column_name ] );
 
 			// Check if the column's type is in the array of numeric types
-			return isset( $column->type ) && in_array( strtolower( $column->type ), $this->numeric_column_types, true );
+			return isset( $column->type ) && in_array( strtolower( $column->type ), self::NUMERIC_COLUMN_TYPES, true );
 		}
 
 		/**
@@ -412,7 +427,7 @@ if ( ! class_exists( __NAMESPACE__ . '\\Extended_Query' ) && class_exists( '\EDD
 					$column = $this->get_column_by( [ 'name' => $field ] );
 
 					// Check if the column's type is an integer type
-					if ( ! isset( $column->type ) || ! in_array( strtolower( $column->type ), $this->int_column_types, true ) ) {
+					if ( ! isset( $column->type ) || ! in_array( strtolower( $column->type ), self::INT_COLUMN_TYPES, true ) ) {
 						return false; // If any field is not an integer type, return false
 					}
 				}
